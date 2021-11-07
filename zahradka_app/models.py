@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -13,7 +15,7 @@ class Plant(models.Model):
         (BUSH, 'Keř'),
         (HERB, 'Bylina'),
     ]
-    species = models.CharField(choices=SPECIES_NAME_CHOICES, max_length=2, unique=True)
+    species = models.CharField(choices=SPECIES_NAME_CHOICES, max_length=2, unique=False)
 
     FRUIT = 'FR'
     VEGETABLE = 'VE'
@@ -23,12 +25,11 @@ class Plant(models.Model):
         (VEGETABLE, 'Zelenina'),
         (DECORATIVE, 'Okrasné'),
     ]
-    type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=True)
-    event = models.ForeignKey("Event", related_name="plants", on_delete=models.CASCADE)
+    type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
+
 
     def __str__(self):
-        return f'{self.get_name_display()} : {self.id}'
-
+        return f"{self.name}"
 
 class Event(models.Model):
 
@@ -52,21 +53,37 @@ class Event(models.Model):
         (REJUVENATION, 'Zmlazování'),
         (PRUNING, 'Stříhání'),
     ]
-    type = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=2, unique=True)
-    description = models.TextField()
-    time = models.ForeignKey("TimeOfEvent", related_name="events", on_delete=models.CASCADE)
+    type = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=2, unique=False)
+    description = models.TextField(blank=True, default='')
+    plant = models.ForeignKey(Plant, related_name="events", on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.plant.name} {self.get_type_display()}"
 
 
 class TimeOfEvent(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
+    event = models.ForeignKey(Event, related_name="dates", on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.start_date = datetime.date(year=1970, month=self.start_date.month, day=self.start_date.day)
+        self.end_date = datetime.date(year=1970, month=self.end_date.month, day=self.end_date.day)
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+
 
 
 class Garden(models.Model):
     name = models.CharField(max_length=256)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='')
     address = models.CharField(max_length=512)
-    plant = models.ForeignKey(Plant, related_name="gardens", on_delete=models.CASCADE)
+    plant = models.ManyToManyField(Plant, related_name="gardens")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 
 
 
