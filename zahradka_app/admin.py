@@ -11,7 +11,7 @@ class EventAdmin(admin.ModelAdmin):
 
 
 class TimeOfEventAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["event", "start_date", "end_date"]
 
 
 class GardenAdmin(admin.ModelAdmin):
