@@ -73,11 +73,11 @@ class RegistrationView(FormMixin, TemplateView):
 
 def garden_detail(request, pk):
     garden = Garden.objects.get(id=pk)
-    gardens = Plant.objects.all().get(id=pk)
+    # gardens = Plant.objects.all().get(id=pk)
     context = {
         'name': garden.name,
         'description': garden.description,
         'address': garden.address,
-        'gardens': gardens,
+        'gardens': Plant.objects.all(),
     }
     return TemplateResponse(request, 'garden.html', context=context)
