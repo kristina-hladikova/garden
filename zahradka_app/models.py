@@ -83,6 +83,9 @@ class Garden(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class GardenPlant(models.Model):
+    pass
+
 
 
 

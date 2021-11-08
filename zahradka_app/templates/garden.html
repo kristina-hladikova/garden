@@ -3,13 +3,17 @@
 {% block body %}
 
 <h1>Moje zahrádka</h1><br>
+<h4>Meno zahradky: {{name}}</h4>
+<p>Popis zahradky: {{description}}</p>
+<p>Lokace: {{address}}</p>
 <p>
-    V zahrádce máte rostliny:
+    V zahrádce máte tito rostliny:
 
     <ul>
-    {% for plant in plant_db %}
-        <li>Rostliny: {{ plant.name }}</li>
+    Rostliny:{% for plant in gardens %}
+        <li> {{ plant.name }}</li>
     {% endfor %}
     </ul>
+
 </p>
 {% endblock body %}

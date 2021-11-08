@@ -10,7 +10,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from zahradka_app.forms import RegistrationForm
-from zahradka_app.models import Plant, Garden
+from zahradka_app.models import Plant, Garden, GardenPlant
 
 
 def homepage(request):
@@ -71,12 +71,13 @@ class RegistrationView(FormMixin, TemplateView):
 #         }
 #         return TemplateResponse(request, 'garden.html', context=context)
 
-def garden_detail(request):
-    plants_db = Garden.plant
+def garden_detail(request, pk):
+    garden = Garden.objects.get(id=pk)
+    gardens = Plant.objects.all().get(id=pk)
     context = {
-        'name': Garden.name,
-        'description': Garden.description,
-        'address': Garden.description,
-        'plant': plants_db,
+        'name': garden.name,
+        'description': garden.description,
+        'address': garden.address,
+        'gardens': gardens,
     }
     return TemplateResponse(request, 'garden.html', context=context)
