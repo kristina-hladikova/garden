@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
@@ -9,10 +10,12 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 
 from zahradka_app.forms import RegistrationForm
+from zahradka_app.models import Plant, Garden
 
 
 def homepage(request):
     return render(request, "homepage.html")
+
 
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
@@ -54,3 +57,16 @@ class RegistrationView(FormMixin, TemplateView):
         else:
             return TemplateResponse(request, "accounts/register.html", context={"form": bounded_form})
 
+
+class GardenView(LoginRequiredMixin, TemplateView):
+    template_name = "garden.html"
+
+    def get(self, request, garden_id, *args, **kwargs):
+        plants_db = Garden.objects.all().filter(name=garden_id)
+        context = {
+            'name': Garden.name,
+            'description': Garden.description,
+            'address': Garden.description,
+            'plant': plants_db,
+        }
+        return TemplateResponse(request, 'garden.html', context=context)
