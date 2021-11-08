@@ -58,15 +58,25 @@ class RegistrationView(FormMixin, TemplateView):
             return TemplateResponse(request, "accounts/register.html", context={"form": bounded_form})
 
 
-class GardenView(LoginRequiredMixin, TemplateView):
-    template_name = "garden.html"
+# class GardenView(LoginRequiredMixin, TemplateView):
+#     template_name = "garden.html"
+#
+#     def get(self, request, garden_id, *args, **kwargs):
+#         plants_db = Garden.plant.objects.all() #objects.all().filter(name=garden_id)
+#         context = {
+#             'name': Garden.name,
+#             'description': Garden.description,
+#             'address': Garden.description,
+#             'plant': plants_db,
+#         }
+#         return TemplateResponse(request, 'garden.html', context=context)
 
-    def get(self, request, garden_id, *args, **kwargs):
-        plants_db = Garden.objects.all().filter(name=garden_id)
-        context = {
-            'name': Garden.name,
-            'description': Garden.description,
-            'address': Garden.description,
-            'plant': plants_db,
-        }
-        return TemplateResponse(request, 'garden.html', context=context)
+def garden_detail(request):
+    plants_db = Garden.plant
+    context = {
+        'name': Garden.name,
+        'description': Garden.description,
+        'address': Garden.description,
+        'plant': plants_db,
+    }
+    return TemplateResponse(request, 'garden.html', context=context)

@@ -6,9 +6,10 @@
 <p>
     V zahrádce máte rostliny:
 
+    <ul>
     {% for plant in plant_db %}
-        Rostliny: {{ plant.name }}
+        <li>Rostliny: {{ plant.name }}</li>
     {% endfor %}
-
+    </ul>
 </p>
 {% endblock body %}
