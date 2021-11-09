@@ -71,13 +71,23 @@ class RegistrationView(FormMixin, TemplateView):
 #         }
 #         return TemplateResponse(request, 'garden.html', context=context)
 
-def garden_detail(request, pk):
-    garden = Garden.objects.get(id=pk)
-    # gardens = Plant.objects.all().get(id=pk)
+def garden(request):
+    gardens = Garden.objects.all().order_by('name')
+    context = {
+        'gardens': gardens
+    }
+    return render(request, 'garden.html', context=context)
+
+
+def garden_detail(request, garden_name):
+    garden_id = Garden.objects.get(name=garden_name).id
+    garden = Garden.objects.get(id=garden_id)
+    # gardens = Plant.objects.all().get(id=pk) ...plants = garden.plants.all()
+    plants = Plant.objects.all()
     context = {
         'name': garden.name,
         'description': garden.description,
         'address': garden.address,
-        'gardens': Plant.objects.all(),
+        'plants': plants,
     }
-    return TemplateResponse(request, 'garden.html', context=context)
+    return render(request, 'garden_detail.html', context=context)

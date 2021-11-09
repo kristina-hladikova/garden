@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
-{% block page_title %}Zahrádka{% endblock page_title %}
+{% block page_title %}Moje Zahrádka{% endblock page_title %}
 {% block body %}
 
-<h1>Moje zahrádka</h1><br>
-<h4>Meno zahradky: {{name}}</h4>
-<p>Popis zahradky: {{description}}</p>
-<p>Lokace: {{address}}</p>
-<p>
-    V zahrádce máte tito rostliny:
+<h1>Moje zahrádky</h1><br>
 
     <ul>
-    Rostliny:{% for plant in gardens %}
-        <li> {{ plant.name }}</li>
+    {% for garden in gardens %}
+        <li><a href="/garden/{{garden.name}}">{{ garden.name }}</a></li>
     {% endfor %}
     </ul>
 
