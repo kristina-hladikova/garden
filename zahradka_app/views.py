@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+#from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
@@ -71,6 +72,8 @@ class RegistrationView(FormMixin, TemplateView):
 #         }
 #         return TemplateResponse(request, 'garden.html', context=context)
 
+
+@login_required(login_url='login')
 def garden(request):
     gardens = Garden.objects.all().order_by('name')
     context = {
@@ -79,11 +82,11 @@ def garden(request):
     return render(request, 'garden.html', context=context)
 
 
+@login_required(login_url='login')
 def garden_detail(request, garden_name):
     garden_id = Garden.objects.get(name=garden_name).id
     garden = Garden.objects.get(id=garden_id)
-    # gardens = Plant.objects.all().get(id=pk) ...plants = garden.plants.all()
-    plants = Plant.objects.all()
+    plants = Plant.objects.filter(gardens__name=garden_name)
     context = {
         'name': garden.name,
         'description': garden.description,

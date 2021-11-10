@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant, Event, TimeOfEvent, Garden
+from .models import Plant, Event, TimeOfEvent, Garden, GardenPlant
 
 
 class PlantAdmin(admin.ModelAdmin):
@@ -17,8 +17,11 @@ class TimeOfEventAdmin(admin.ModelAdmin):
 class GardenAdmin(admin.ModelAdmin):
     pass
 
+class GardenPlantAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(TimeOfEvent, TimeOfEventAdmin)
 admin.site.register(Garden, GardenAdmin)
+admin.site.register(GardenPlant, GardenPlantAdmin)

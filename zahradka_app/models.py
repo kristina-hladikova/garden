@@ -73,19 +73,20 @@ class TimeOfEvent(models.Model):
         super().save(*args, **kwargs)  # Call the "real" save() method.
 
 
-
 class Garden(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, default='')
     address = models.CharField(max_length=512)
-    plant = models.ManyToManyField(Plant, related_name="gardens")
+    plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant")
 
     def __str__(self):
         return f"{self.name}"
 
-class GardenPlant(models.Model):
-    pass
 
+class GardenPlant(models.Model):
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    garden = models.ForeignKey(Garden, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
 
 
 
