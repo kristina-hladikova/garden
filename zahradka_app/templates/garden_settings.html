@@ -7,21 +7,12 @@
 <p>Popis zahradky: {{description}}</p>
 <p>Lokace: {{address}}</p>
 <p>
-    V zahrádce máte tito rostliny:
-
-    <ul>
+ <ul>
     Rostliny:{% for plant in plants %}
         <li> {{ plant.name }}</li>
 
     {% endfor %}
     </ul>
-
- <ul>{% for event in events %}
-                    <li>
-                       {{ event.type }}
-                    </li>
-                    {% endfor %}
-                </ul>
 
 </p>
 {% endblock body %}

@@ -7,11 +7,11 @@ from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormMixin
 
 from zahradka_app.forms import RegistrationForm
-from zahradka_app.models import Plant, Garden, GardenPlant
+from zahradka_app.models import Plant, Garden, GardenPlant, Event
 
 
 def homepage(request):
@@ -87,10 +87,45 @@ def garden_detail(request, garden_name):
     garden_id = Garden.objects.get(name=garden_name).id
     garden = Garden.objects.get(id=garden_id)
     plants = Plant.objects.filter(gardens__name=garden_name)
+    # plant_id = Plant.objects.get(Plant.name).id
+    events = Event.objects.filter(plant__name=Plant.name)
     context = {
         'name': garden.name,
         'description': garden.description,
         'address': garden.address,
         'plants': plants,
+        'event': events,
     }
     return render(request, 'garden_detail.html', context=context)
+
+# @login_required(login_url='login')
+# def garden_settings(request, ...):
+
+
+
+
+
+class GardenSettingsView(View):
+    template_name = 'garden_settings.html'
+    model = GardenPlant
+
+    def get(self, request, garden_name, *args, **kwargs):
+        garden_id = Garden.objects.get(name=garden_name).id
+        garden = Garden.objects.get(id=garden_id)
+
+        context = {
+            'name': garden.name,
+            'description': garden.description,
+            'address': garden.address,
+            'plants': Plant.objects.all(),
+        }
+
+        return render(request, 'garden_settings.html', context=context)
+
+
+    def post(self, request, plant, *args, **kwargs):
+        gardenplant = self.get_object()
+        gardenplant.add(plant)
+        gardenplant.save()
+        return self.get(request, *args, **kwargs)
+

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import RegistrationView, LoginView, LogoutView, ChangePasswordView, garden_detail, garden
+from .views import RegistrationView, LoginView, LogoutView, ChangePasswordView, garden_detail, garden, \
+    GardenSettingsView
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
@@ -10,4 +11,5 @@ urlpatterns = [
     path("change_password/", ChangePasswordView.as_view(), name="change_password"),
     path("garden/", garden, name="garden"),
     path("garden/<str:garden_name>/", garden_detail, name="garden_detail"),
+    path("settings/<str:garden_name>/", GardenSettingsView.as_view, name="garden_settings"),
 ]
