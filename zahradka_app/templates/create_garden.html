@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page_title %}Vytvoření zahrady{% endblock page_title %}
+{% block body %}
+
+<h1>Vytvoření zahrady</h1><br>
+    <form action="{{ action_url }}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock body %}

@@ -8,9 +8,9 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, CreateView
 
-from zahradka_app.forms import RegistrationForm
+from zahradka_app.forms import RegistrationForm, GardenForm
 from zahradka_app.models import Plant, Garden, GardenPlant, Event
 
 
@@ -105,27 +105,53 @@ def garden_detail(request, garden_name):
 
 
 
-class GardenSettingsView(View):
-    template_name = 'garden_settings.html'
-    model = GardenPlant
+# class GardenSettingsView(View):
+#     template_name = 'garden_settings.html'
+#     model = GardenPlant
+#
+#     def get(self, request, garden_name, *args, **kwargs):
+#         garden_id = Garden.objects.get(name=garden_name).id
+#         garden = Garden.objects.get(id=garden_id)
+#
+#         context = {
+#             'name': garden.name,
+#             'description': garden.description,
+#             'address': garden.address,
+#             'plants': Plant.objects.all(),
+#         }
+#
+#         return render(request, 'garden_settings.html', context=context)
+#
+#
+#     def post(self, request, plant, *args, **kwargs):
+#         gardenplant = self.get_object()
+#         gardenplant.add(plant)
+#         gardenplant.save()
+#         return self.get(request, *args, **kwargs)
 
-    def get(self, request, garden_name, *args, **kwargs):
-        garden_id = Garden.objects.get(name=garden_name).id
-        garden = Garden.objects.get(id=garden_id)
 
-        context = {
-            'name': garden.name,
-            'description': garden.description,
-            'address': garden.address,
-            'plants': Plant.objects.all(),
-        }
+# class EditGardenMixin:
+#     template_name = 'create_garden.html'
+#     form_class = GardenForm
+#     model = Garden
+#
+#     def get_success_url(self):
+#         return resolve_url('garden_detail')
+#
+#
+# class CreateGardenView(EditGardenMixin, CreateView):
+#     def get_context_data(self, **kwargs):
+#         context = super(CreateGardenView, self).get_context_data(**kwargs)
+#         context.update({
+#             'action_url': resolve_url('create_garden')
+#         })
+#         return context
 
-        return render(request, 'garden_settings.html', context=context)
 
-
-    def post(self, request, plant, *args, **kwargs):
-        gardenplant = self.get_object()
-        gardenplant.add(plant)
-        gardenplant.save()
-        return self.get(request, *args, **kwargs)
-
+def create_garden(request):
+    form = GardenForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    context = {"form": form}
+    return render(request, "create_garden.html", context)
