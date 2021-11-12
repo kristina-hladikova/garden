@@ -3,6 +3,10 @@
 {% block body %}
 
 <h1>Moje zahrádka</h1><br>
+
+<a href="/update_garden/{{ garden.name }}">Update zahrady</a>
+<a href="/delete_garden/{{ garden.name }}">Delete zahrady</a>
+
 <h4>Meno zahradky: {{name}}</h4>
 <p>Popis zahradky: {{description}}</p>
 <p>Lokace: {{address}}</p>

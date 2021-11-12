@@ -155,3 +155,20 @@ def create_garden(request):
         return redirect('/')
     context = {"form": form}
     return render(request, "create_garden.html", context)
+
+
+def update_garden(request, garden_name):
+    garden = Garden.objects.get(name=garden_name)
+    form = GardenForm(request.POST or None, instance=garden)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    context = {"form": form}
+    return render(request, "update_garden.html", context)
+
+
+def delete_garden(request, garden_name):
+    garden = Garden.objects.get(name=garden_name)
+    garden.delete()
+    return redirect('/')
+

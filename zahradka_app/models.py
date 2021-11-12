@@ -82,11 +82,19 @@ class Garden(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def get_url_slug(self):
+        return self.get_name_display().lower()
+
 
 class GardenPlant(models.Model):
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.garden.name} - {self.plant.name}"
+
+
 
 
 
