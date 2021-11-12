@@ -12,6 +12,6 @@ urlpatterns = [
     path("garden/<str:garden_name>/", garden_detail, name="garden_detail"),
     #path("settings/<str:garden_name>/", GardenSettingsView.as_view, name="garden_settings"),
     path("create_garden/", views.create_garden, name="create_garden"),
-    path("update_garden/<str:garden_name>/", views.update_garden, name="update_garden"),
-    path("delete_garden/<str:garden_name>/", views.delete_garden, name="delete_garden"),
+    path("garden/<str:garden_name>/update_garden/", views.update_garden, name="update_garden"),
+    path("garden/<str:garden_name>/delete_garden/", views.delete_garden, name="delete_garden"),
 ]
