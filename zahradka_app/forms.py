@@ -14,7 +14,7 @@ class RegistrationForm(UserCreationForm):
 class GardenForm(forms.ModelForm):
     class Meta:
         model = Garden
-        fields = ['name', 'description', 'address']
+        fields = ['name', 'description', 'address', 'plant']
 
 
 

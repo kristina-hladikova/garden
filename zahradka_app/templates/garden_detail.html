@@ -4,8 +4,8 @@
 
 <h1>Moje zahrádka</h1><br>
 
-<a href="update_garden">Update zahrady</a>
-<a href="delete_garden">Delete zahrady</a>
+<a href="update_garden">Uprav si svoji zahradu</a>
+<a href="delete_garden">Vymazat zahradu</a>
 
 <h4>Meno zahradky: {{name}}</h4>
 <p>Popis zahradky: {{description}}</p>
@@ -19,7 +19,7 @@
 
     {% endfor %}
     </ul>
-
+Eventy:
  <ul>{% for event in events %}
                     <li>
                        {{ event.type }}
