@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 #from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -10,7 +11,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormMixin, CreateView
 
-from zahradka_app.forms import RegistrationForm, GardenForm
+from zahradka_app.forms import RegistrationForm, GardenForm, ContactForm
 from zahradka_app.models import Plant, Garden, GardenPlant, Event
 
 
@@ -171,4 +172,27 @@ def delete_garden(request, garden_name):
     garden = Garden.objects.get(name=garden_name)
     garden.delete()
     return redirect('/')
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = "Website Inquiry"
+            body = {
+                'first_name': form.cleaned_data['first_name'],
+                'last_name': form.cleaned_data['last_name'],
+                'email': form.cleaned_data['email_address'],
+                'message': form.cleaned_data['message'],
+            }
+            message = "\n".join(body.values())
+
+            try:
+                send_mail(subject, message, 'kristi.lackova@gmail.com', ['kristi.lackova@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect("homepage")
+
+    form = ContactForm()
+    return render(request, "contact.html", {'form': form})
 

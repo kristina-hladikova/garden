@@ -14,4 +14,5 @@ urlpatterns = [
     path("create_garden/", views.create_garden, name="create_garden"),
     path("garden/<str:garden_name>/update_garden/", views.update_garden, name="update_garden"),
     path("garden/<str:garden_name>/delete_garden/", views.delete_garden, name="delete_garden"),
+    path("contact", views.contact, name="contact"),
 ]
