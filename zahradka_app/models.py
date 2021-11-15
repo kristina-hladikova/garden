@@ -1,5 +1,6 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -26,6 +27,7 @@ class Plant(models.Model):
         (DECORATIVE, 'Okrasné'),
     ]
     type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
+    plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None, max_length=20)
 
 
     def __str__(self):
@@ -78,6 +80,7 @@ class Garden(models.Model):
     description = models.TextField(blank=True, default='')
     address = models.CharField(max_length=512)
     plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant")
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}"

@@ -15,6 +15,11 @@ class GardenForm(forms.ModelForm):
     class Meta:
         model = Garden
         fields = ['name', 'description', 'address', 'plant']
+    # model = Garden
+    # name = forms.CharField
+    # description = forms.CharField(widget=forms.Textarea)
+    # address = forms.CharField
+    # plant = forms.CharField(widget=forms.CheckboxSelectMultiple)
 
 
 class ContactForm(forms.Form):

@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 #from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
@@ -76,7 +77,7 @@ class RegistrationView(FormMixin, TemplateView):
 
 @login_required(login_url='login')
 def garden(request):
-    gardens = Garden.objects.all().order_by('name')
+    gardens = Garden.objects.filter(user=request.user)
     context = {
         'gardens': gardens
     }
@@ -95,7 +96,7 @@ def garden_detail(request, garden_name):
         'description': garden.description,
         'address': garden.address,
         'plants': plants,
-        'event': events,
+        'events': events,
     }
     return render(request, 'garden_detail.html', context=context)
 

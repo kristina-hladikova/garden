@@ -12,11 +12,14 @@
 <p>Lokace: {{address}}</p>
 <p>
     V zahrádce máte tito rostliny:
+{% load static %}
 
     <ul>
-    Rostliny:{% for plant in plants %}
-        <li> {{ plant.name }}</li>
-
+    Rostliny:
+    {% for plant in plants %}
+        {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
+        <li> <img src="{% static plant_photo %}"> {{ plant.name }}</li>
+        {% endwith %}
     {% endfor %}
     </ul>
 Eventy:
