@@ -151,12 +151,18 @@ def garden_detail(request, garden_name):
 
 
 def create_garden(request):
+
     form = GardenForm(request.POST or None)
     if form.is_valid():
         form.save()
+
+        User.add(user=request.user)
+        garden.save()
         return redirect('/')
     context = {"form": form}
     return render(request, "create_garden.html", context)
+
+
 
 
 def update_garden(request, garden_name):

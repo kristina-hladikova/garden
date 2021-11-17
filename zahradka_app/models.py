@@ -27,7 +27,7 @@ class Plant(models.Model):
         (DECORATIVE, 'Okrasné'),
     ]
     type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
-    plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None, max_length=20)
+    plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None, max_length=20, blank=True)
 
 
     def __str__(self):
