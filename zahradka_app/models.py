@@ -3,6 +3,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
+# class User(AbstractUser):
+#     pass
 
 class Plant(models.Model):
     name = models.CharField(max_length=256)
@@ -45,17 +47,17 @@ class Event(models.Model):
     REJUVENATION = 'RE'
     PRUNING = 'PR'
     TYPE_EVENT_CHOICES = [
-        (PLANTING, 'Výsadba'),
-        (TRANSPLANTING, 'Přesazování'),
-        (VACCINATION, 'Očkování'),
-        (GRAFTING, 'Roubování'),
-        (PEST_CONTROL, 'Ochrana proti škůdcům'),
-        (HARVESTING, 'Sklizeň'),
-        (FERTILISATION, 'Hnojení'),
-        (REJUVENATION, 'Zmlazování'),
-        (PRUNING, 'Stříhání'),
+        ('PLANTING', 'Výsadba'),
+        ('TRANSPLANTING', 'Přesazování'),
+        ('VACCINATION', 'Očkování'),
+        ('GRAFTING', 'Roubování'),
+        ('PEST_CONTROL', 'Ochrana proti škůdcům'),
+        ('HARVESTING', 'Sklizeň'),
+        ('FERTILISATION', 'Hnojení'),
+        ('REJUVENATION', 'Zmlazování'),
+        ('PRUNING', 'Stříhání'),
     ]
-    type = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=2, unique=False)
+    type = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
     description = models.TextField(blank=True, default='')
     plant = models.ForeignKey(Plant, related_name="events", on_delete=models.CASCADE)
 

@@ -90,7 +90,9 @@ def garden_detail(request, garden_name):
     garden = Garden.objects.get(id=garden_id)
     plants = Plant.objects.filter(gardens__name=garden_name)
     # plant_id = Plant.objects.get(Plant.name).id
-    events = Event.objects.filter(plant__name=Plant.name)
+    # events = Event.objects.filter(plant__name=plant__name)
+    for plant in plants:
+        events = Event.objects.filter(plant__name=plant.name)
     context = {
         'name': garden.name,
         'description': garden.description,
@@ -102,9 +104,6 @@ def garden_detail(request, garden_name):
 
 # @login_required(login_url='login')
 # def garden_settings(request, ...):
-
-
-
 
 
 # class GardenSettingsView(View):
@@ -151,18 +150,15 @@ def garden_detail(request, garden_name):
 
 
 def create_garden(request):
-
+    # gardens = Garden.objects.all()
     form = GardenForm(request.POST or None)
     if form.is_valid():
         form.save()
-
-        User.add(user=request.user)
-        garden.save()
-        return redirect('/')
+        # gardens.add(user=request.user)
+        # gardens.save()
+        return redirect('/garden')
     context = {"form": form}
     return render(request, "create_garden.html", context)
-
-
 
 
 def update_garden(request, garden_name):
@@ -170,7 +166,7 @@ def update_garden(request, garden_name):
     form = GardenForm(request.POST or None, instance=garden)
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('/garden')
     context = {"form": form}
     return render(request, "update_garden.html", context)
 
