@@ -14,6 +14,7 @@ from django.views.generic.edit import FormMixin, CreateView
 
 from zahradka_app.forms import RegistrationForm, GardenForm, ContactForm
 from zahradka_app.models import Plant, Garden, GardenPlant, Event
+from datetime import date
 
 
 def homepage(request):
@@ -89,7 +90,16 @@ def garden_detail(request, garden_name):
     garden_id = Garden.objects.get(name=garden_name).id
     garden = Garden.objects.get(id=garden_id)
     plants = Plant.objects.filter(gardens__name=garden_name)
+    # if request.POST:
+    calendar_str = request.POST.get('calendar')
+    if calendar_str:
+        my_today = date.fromisoformat(calendar_str)
+    else:
+        my_today = date.today()
+    shifted_today = date(year=1970, month=my_today.month, day=my_today.day)
     events = Event.objects.filter(plant__gardens__id=garden_id)
+    events = events.filter(dates__start_date__lte=shifted_today, dates__end_date__gte=shifted_today)
+
 
     context = {
         'name': garden.name,
@@ -97,6 +107,7 @@ def garden_detail(request, garden_name):
         'address': garden.address,
         'plants': plants,
         'events': events,
+        'calendar': calendar_str,
     }
     return render(request, 'garden_detail.html', context=context)
 
@@ -164,7 +175,7 @@ def update_garden(request, garden_name):
     garden = Garden.objects.get(name=garden_name)
     form = GardenForm(request.POST or None, instance=garden)
     if form.is_valid():
-        form.save()
+        form.save(request.user)
         return redirect('/garden')
     context = {"form": form}
     return render(request, "update_garden.html", context)

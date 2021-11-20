@@ -25,10 +25,19 @@
 Eventy:
  <ul>{% for event in events %}
                     <li>
-                       {{ event.type }}: {{ event.description }}
+                       {{ event }}: {{ event.description }}
+
                     </li>
                     {% endfor %}
                 </ul>
 
 </p>
+<form action="{% url 'garden_detail' name %}" method="post">
+    {% csrf_token %}
+<label> <input type="date" name="calendar">Vyber datum</label>
+    <input type="submit">
+<!--    onclick ajax -->
+    </form>
+{{ calendar }}
+
 {% endblock body %}

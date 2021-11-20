@@ -23,7 +23,7 @@ class GardenForm(forms.ModelForm):
     # name = forms.CharField
     # description = forms.CharField(widget=forms.Textarea)
     # address = forms.CharField
-    # plant = forms.CharField(widget=forms.CheckboxSelectMultiple)
+    plant = forms.CharField(widget=forms.CheckboxSelectMultiple)
 
 
 class ContactForm(forms.Form):

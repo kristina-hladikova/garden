@@ -47,29 +47,37 @@ class Event(models.Model):
     REJUVENATION = 'RE'
     PRUNING = 'PR'
     TYPE_EVENT_CHOICES = [
-        ('PLANTING', 'Výsadba'),
-        ('TRANSPLANTING', 'Přesazování'),
-        ('VACCINATION', 'Očkování'),
-        ('GRAFTING', 'Roubování'),
-        ('PEST_CONTROL', 'Ochrana proti škůdcům'),
-        ('HARVESTING', 'Sklizeň'),
-        ('FERTILISATION', 'Hnojení'),
-        ('REJUVENATION', 'Zmlazování'),
-        ('PRUNING', 'Stříhání'),
+        (PLANTING, 'Výsadba'),
+        (TRANSPLANTING, 'Přesazování'),
+        (VACCINATION, 'Očkování'),
+        (GRAFTING, 'Roubování'),
+        (PEST_CONTROL, 'Ochrana proti škůdcům'),
+        (HARVESTING, 'Sklizeň'),
+        (FERTILISATION, 'Hnojení'),
+        (REJUVENATION, 'Zmlazování'),
+        (PRUNING, 'Stříhání'),
     ]
-    type = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
+    name = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
     description = models.TextField(blank=True, default='')
     plant = models.ForeignKey(Plant, related_name="events", on_delete=models.CASCADE)
 
+    # def is_event_planting(self) -> bool:
+    #     return self.name == self.PLANTING
+
+    # def get_name_display(self):
+    #     return {self.event.name}
+    # def __str__(self):
+    #     return f'{self.get_name_display()}'
 
     def __str__(self):
-        return f"{self.plant.name} {self.get_type_display()}"
+        return f"{self.plant.name} {self.get_name_display()}"
 
 
 class TimeOfEvent(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     event = models.ForeignKey(Event, related_name="dates", on_delete=models.CASCADE)
+
 
     def save(self, *args, **kwargs):
         self.start_date = datetime.date(year=1970, month=self.start_date.month, day=self.start_date.day)
