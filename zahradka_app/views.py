@@ -106,6 +106,7 @@ def garden_detail(request, garden_name):
         'description': garden.description,
         'address': garden.address,
         'plants': plants,
+        'date': my_today,
         'events': events,
         'calendar': calendar_str,
     }

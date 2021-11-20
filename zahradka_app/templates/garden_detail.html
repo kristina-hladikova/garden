@@ -18,10 +18,13 @@
     Rostliny:
     {% for plant in plants %}
         {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
-        <li> <img src="{% static plant_photo %}"> {{ plant.name }}</li>
+        <li> <img src="{% static plant_photo %}" class="rounded-circle" width="150" > {{ plant.name }}</li>
         {% endwith %}
     {% endfor %}
     </ul>
+<p>
+Eventy ke dni: {{ date }}
+</p>
 Eventy:
  <ul>{% for event in events %}
                     <li>
@@ -35,7 +38,7 @@ Eventy:
 <form action="{% url 'garden_detail' name %}" method="post">
     {% csrf_token %}
 <label> <input type="date" name="calendar">Vyber datum</label>
-    <input type="submit">
+    <input type="submit" class="btn btn-outline-secondary" value="Odeslat">
 <!--    onclick ajax -->
     </form>
 {{ calendar }}

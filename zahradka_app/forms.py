@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from zahradka_app.models import Garden
+from zahradka_app.models import Garden, Plant
 
 
 class RegistrationForm(UserCreationForm):
@@ -15,15 +15,15 @@ class GardenForm(forms.ModelForm):
     class Meta:
         model = Garden
         fields = ['name', 'description', 'address', 'plant']
+
     def save(self, user):
         garden = super().save(commit=False)
         garden.user = user
         garden.save()
-    # model = Garden
-    # name = forms.CharField
-    # description = forms.CharField(widget=forms.Textarea)
-    # address = forms.CharField
-    plant = forms.CharField(widget=forms.CheckboxSelectMultiple)
+        garden.plant.add(*self.cleaned_data.get('plant'))
+
+    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
+
 
 
 class ContactForm(forms.Form):
