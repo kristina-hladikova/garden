@@ -89,10 +89,8 @@ def garden_detail(request, garden_name):
     garden_id = Garden.objects.get(name=garden_name).id
     garden = Garden.objects.get(id=garden_id)
     plants = Plant.objects.filter(gardens__name=garden_name)
-    # plant_id = Plant.objects.get(Plant.name).id
-    # events = Event.objects.filter(plant__name=plant__name)
-    for plant in plants:
-        events = Event.objects.filter(plant__name=plant.name)
+    events = Event.objects.filter(plant__gardens__id=garden_id)
+
     context = {
         'name': garden.name,
         'description': garden.description,
@@ -150,12 +148,13 @@ def garden_detail(request, garden_name):
 
 
 def create_garden(request):
-    # gardens = Garden.objects.all()
+    # post_data = dict(request.POST)
+    # post_data['user'] = request.user
     form = GardenForm(request.POST or None)
     if form.is_valid():
-        form.save()
-        # gardens.add(user=request.user)
-        # gardens.save()
+
+        form.save(request.user)
+
         return redirect('/garden')
     context = {"form": form}
     return render(request, "create_garden.html", context)

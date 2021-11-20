@@ -15,6 +15,10 @@ class GardenForm(forms.ModelForm):
     class Meta:
         model = Garden
         fields = ['name', 'description', 'address', 'plant']
+    def save(self, user):
+        garden = super().save(commit=False)
+        garden.user = user
+        garden.save()
     # model = Garden
     # name = forms.CharField
     # description = forms.CharField(widget=forms.Textarea)
