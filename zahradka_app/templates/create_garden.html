@@ -6,6 +6,7 @@
     <form action="{{ action_url }}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if has_subscription %}gratulujeme{% endif %}
         <input type="submit" value="Save">
     </form>
 

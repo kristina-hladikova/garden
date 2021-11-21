@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm
 #from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -87,10 +87,9 @@ def garden(request):
 
 
 @login_required(login_url='login')
-def garden_detail(request, garden_name):
-    garden_id = Garden.objects.get(name=garden_name).id
+def garden_detail(request, garden_id):
     garden = Garden.objects.get(id=garden_id)
-    plants = Plant.objects.filter(gardens__name=garden_name)
+    plants = Plant.objects.filter(gardens__id=garden_id)
     calendar_str = request.POST.get('calendar')
     if calendar_str:
         my_today = date.fromisoformat(calendar_str)
@@ -101,9 +100,7 @@ def garden_detail(request, garden_name):
     events = events.filter(dates__start_date__lte=shifted_today, dates__end_date__gte=shifted_today)
 
     context = {
-        'name': garden.name,
-        'description': garden.description,
-        'address': garden.address,
+        "garden": garden,
         'plants': plants,
         'date': my_today,
         'events': events,
@@ -157,22 +154,24 @@ def garden_detail(request, garden_name):
 #         })
 #         return context
 
+def subscription_check(user):
+    return UserMembership.objects.get(user=user).membership.membership_type == Membership.PLUS
 
+#@user_passes_test(subscription_check, login_url='/membership/')
 def create_garden(request):
-    # post_data = dict(request.POST)
-    # post_data['user'] = request.user
     form = GardenForm(request.POST or None)
     if form.is_valid():
-
         form.save(request.user)
 
         return redirect('/garden')
-    context = {"form": form}
+    context = {"form": form,
+               "has_subscription": subscription_check(request.user)}
     return render(request, "create_garden.html", context)
 
 
-def update_garden(request, garden_name):
-    garden = Garden.objects.get(name=garden_name)
+@user_passes_test(subscription_check)
+def update_garden(request, garden_id):
+    garden = Garden.objects.get(id=garden_id)
     form = GardenForm(request.POST or None, instance=garden)
     if form.is_valid():
         form.save(request.user)
@@ -181,8 +180,8 @@ def update_garden(request, garden_name):
     return render(request, "update_garden.html", context)
 
 
-def delete_garden(request, garden_name):
-    garden = Garden.objects.get(name=garden_name)
+def delete_garden(request, garden_id):
+    garden = Garden.objects.get(id=garden_id)
     garden.delete()
     return redirect('/')
 

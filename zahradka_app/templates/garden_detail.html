@@ -7,9 +7,9 @@
 <a class="text-dark" href="update_garden">Uprav si svoji zahradu</a>
 <a class="text-dark" href="delete_garden">Vymazat zahradu</a>
 
-<h4>Meno zahradky: {{name}}</h4>
-<p>Popis zahradky: {{description}}</p>
-<p>Lokace: {{address}}</p>
+<h4>Meno zahradky: {{garden.name}}</h4>
+<p>Popis zahradky: {{garden.description}}</p>
+<p>Lokace: {{garden.address}}</p>
 <p>
     V zahrádce máte tito rostliny:
 {% load static %}
@@ -35,7 +35,7 @@ Eventy:
                 </ul>
 
 </p>
-<form action="{% url 'garden_detail' name %}" method="post">
+<form action="{% url 'garden_detail' garden.id %}" method="post">
     {% csrf_token %}
 <label> <input type="date" name="calendar">Vyber datum</label>
     <input type="submit" class="btn btn-outline-secondary" value="Odeslat">
