@@ -9,12 +9,13 @@ from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from django.views.generic.edit import FormMixin, CreateView
 
 from zahradka_app.forms import RegistrationForm, GardenForm, ContactForm
-from zahradka_app.models import Plant, Garden, GardenPlant, Event
+from zahradka_app.models import Plant, Garden, GardenPlant, Event, Membership, UserMembership, Subscription
 from datetime import date
+
 
 
 def homepage(request):
@@ -90,7 +91,6 @@ def garden_detail(request, garden_name):
     garden_id = Garden.objects.get(name=garden_name).id
     garden = Garden.objects.get(id=garden_id)
     plants = Plant.objects.filter(gardens__name=garden_name)
-    # if request.POST:
     calendar_str = request.POST.get('calendar')
     if calendar_str:
         my_today = date.fromisoformat(calendar_str)
@@ -99,7 +99,6 @@ def garden_detail(request, garden_name):
     shifted_today = date(year=1970, month=my_today.month, day=my_today.day)
     events = Event.objects.filter(plant__gardens__id=garden_id)
     events = events.filter(dates__start_date__lte=shifted_today, dates__end_date__gte=shifted_today)
-
 
     context = {
         'name': garden.name,
@@ -210,3 +209,25 @@ def contact(request):
     form = ContactForm()
     return render(request, "contact.html", {'form': form})
 
+
+class MembershipView(ListView):
+    model = Membership
+    template_name = 'membership.html'
+
+    def get_user_membership(self):
+        user_membership_qs = UserMembership.objects.filter(user=self.request.user)
+        if user_membership_qs.exists():
+            return user_membership_qs.first()
+        return None
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_membership = self.get_user_membership()
+        context['current_membership'] = str(current_membership.membership)
+        return context
+
+    def post(self, request):
+        current_membership = self.get_user_membership()
+        current_membership.membership = Membership.objects.get(membership_type=request.POST.get('membership_type'))
+        current_membership.save()
+        return redirect('membership')

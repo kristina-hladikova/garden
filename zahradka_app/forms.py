@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from zahradka_app.models import Garden, Plant
+from zahradka_app.models import Garden, Plant, Membership, UserMembership, Subscription
 
 
 class RegistrationForm(UserCreationForm):
@@ -25,10 +25,31 @@ class GardenForm(forms.ModelForm):
     plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
 
 
-
 class ContactForm(forms.Form):
-    first_name = forms.CharField(max_length = 50)
-    last_name = forms.CharField(max_length = 50)
-    email_address = forms.EmailField(max_length = 150)
-    message = forms.CharField(widget = forms.Textarea, max_length = 2000)
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email_address = forms.EmailField(max_length=150)
+    message = forms.CharField(widget=forms.Textarea, max_length=2000)
 
+
+class SignUpForm(UserCreationForm):
+    try:
+        free_membership = Membership.objects.get(membership_type=Membership.FREE)
+    except Membership.DoesNotExist:
+        pass
+
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    def save(self):
+        user = super().save(commit=False)
+        user.save()
+        # Creating a new UserMembership
+        user_membership = UserMembership.objects.create(user=user, membership=self.free_membership)
+        user_membership.save()
+        # Creating a new UserSubscription
+        user_subscription = Subscription()
+        user_subscription.user_membership = user_membership
+        user_subscription.save()
+        return user

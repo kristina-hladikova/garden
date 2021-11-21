@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant, Event, TimeOfEvent, Garden, GardenPlant
+from .models import Plant, Event, TimeOfEvent, Garden, GardenPlant, Membership, UserMembership, Subscription
 
 
 class PlantAdmin(admin.ModelAdmin):
@@ -25,3 +25,6 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(TimeOfEvent, TimeOfEventAdmin)
 admin.site.register(Garden, GardenAdmin)
 admin.site.register(GardenPlant, GardenPlantAdmin)
+admin.site.register(Membership)
+admin.site.register(UserMembership)
+admin.site.register(Subscription)
