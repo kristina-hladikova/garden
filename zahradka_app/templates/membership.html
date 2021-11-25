@@ -12,7 +12,7 @@
 <div class="card" style="width: 18rem;">
 <!-- <img class="card-img-top " src="{{ object.image.url }}" alt="Card image cap"> -->
 <div class="card-body">
-<h5 class="card-title">{{ object.membership_type }}</h5>
+<h5 class="card-title">{{ object.get_membership_type_display }}</h5>
 <p class="card-text">{{ object.desc | linebreaks }}</p>
 </div>
 <ul class="list-group list-group-flush">

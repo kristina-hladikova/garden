@@ -118,6 +118,11 @@ class Membership(models.Model):
     membership_type = models.CharField(choices=MEMBERSHIP_CHOICES, default=FREE, max_length=30)
     price = models.DecimalField(default=0, max_digits=999, decimal_places=2)
 
+
+    def __str__(self):
+       return f"{self.get_membership_type_display()}"
+
+
     def __str__(self):
        return self.membership_type
 
