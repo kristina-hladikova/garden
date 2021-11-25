@@ -1,31 +1,42 @@
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 {% block page_title %}Zahrádka{% endblock page_title %}
 {% block body %}
 
-<h1>Moje zahrádka</h1><br>
 
-<a class="text-dark" href="update_garden">Uprav si svoji zahradu</a>
-<a class="text-dark" href="delete_garden">Vymazat zahradu</a>
+<h1>Moje zahrádka: {{garden.name}}</h1><br>
 
-<h4>Meno zahradky: {{garden.name}}</h4>
-<p>Popis zahradky: {{garden.description}}</p>
-<p>Lokace: {{garden.address}}</p>
+    <i>>> <a class="text-dark" href="update_garden">Upravit zahradu</a><br>
+       >> <a class="text-dark" href="delete_garden"> Vymazat zahradu</a></i>
+<br><br>
+
+<i><b><p>Popis zahradky: {{garden.description}}<br>
+Lokace: {{garden.address}}</p></b></i>
 <p>
-    V zahrádce máte tito rostliny:
+    Ve svojí zahrádce máte tyto rostliny:
 {% load static %}
 
     <ul>
-    Rostliny:
     {% for plant in plants %}
         {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
-        <li> <img src="{% static plant_photo %}" class="rounded-circle" width="150" > {{ plant.name }}</li>
+        <li>{{ plant.name }} <img src="{% static plant_photo %}" class="rounded-circle" width="150"> </li>
         {% endwith %}
     {% endfor %}
     </ul>
 <p>
-Eventy ke dni: {{ date }}
+    <b>Práce na zahrádce ke dni: {{ date }} </b><br><br>
+Nastav jiné datum:
+<form action="{% url 'garden_detail' garden.id %}" method="post">
+    {% csrf_token %}
+<label> <input type="date" name="calendar"> vybrat datum</label>
+    <input type="submit" class="btn btn-outline-secondary" value="Odeslat">
+<!--    onclick ajax -->
+    </form>
+
+
+
 </p>
-Eventy:
+    {% if events %}
+    <h2>Práce na zahrádce:</h2>
  <ul>{% for event in events %}
                     <li>
                        {{ event }}: {{ event.description }}
@@ -34,13 +45,11 @@ Eventy:
                     {% endfor %}
                 </ul>
 
-</p>
-<form action="{% url 'garden_detail' garden.id %}" method="post">
-    {% csrf_token %}
-<label> <input type="date" name="calendar">Vyber datum</label>
-    <input type="submit" class="btn btn-outline-secondary" value="Odeslat">
-<!--    onclick ajax -->
-    </form>
-{{ calendar }}
 
+
+    {% else %}
+    <h2>Práce na zahrádce:</h2>
+V toto datum nemáte na zahradě žádné práce :-)
+{% endif %}
+</p>
 {% endblock body %}

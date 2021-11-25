@@ -4,11 +4,18 @@
 
 <h1>Moje zahrádky</h1><br>
 
+
+{% if gardens %}
+    Podívejte se na detaily svých zahrádek:
     <ul>
     {% for garden in gardens %}
         <li><a class="text-dark" href="/garden/{{garden.id}}">{{ garden.name }}</a></li>
     {% endfor %}
     </ul>
+
+{% else %}
+Nejprve musíte <a href="{% url 'create_garden' %}">Založit zahrádku</a> :-)
+{% endif %}
 
 </p>
 {% endblock body %}

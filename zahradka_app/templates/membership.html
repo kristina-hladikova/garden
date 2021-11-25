@@ -4,7 +4,7 @@
 
 <div class="container">
 <br>
-<h1>Choose a plan according to your needs</h1>
+<h1>Vyberte si svůj plán:</h1>
 <hr>
 <div class="row">
 {% for object in object_list %}
@@ -16,16 +16,16 @@
 <p class="card-text">{{ object.desc | linebreaks }}</p>
 </div>
 <ul class="list-group list-group-flush">
-<li class="list-group-item"> ${{ object.price }}<small>/month</small></li>
+<li class="list-group-item"> {{ object.price }} Kč<small>/ rok</small></li>
 </ul>
 <div class="card-body">
 {% if object.membership_type != 'Free' %}
 <form method="POST" action="{% url 'membership' %}">
 {% csrf_token %}
 {% if object.membership_type != current_membership %}
-<button class="btn btn-warning">Change</button>
+<button class="btn btn-warning">Vybrat</button>
 {% else %}
-<small>Your current plan</small>
+<small>Váš současný program</small>
 {% endif %}
 <input type="hidden" name="membership_type" value="{{ object.membership_type }}">
 </form>
