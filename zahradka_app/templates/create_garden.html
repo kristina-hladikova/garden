@@ -5,7 +5,15 @@
 <h1>Vytvoření zahrady</h1><br>
     <form action="{{ action_url }}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        Název tvoji zahrádky: {{ form.name }}
+        <br><br>
+        Opiš svoji zahrádku: {{ form.description }}
+        <br><br>
+        Lokace: {{ form.address }}
+        <br><br>
+        Vyber rostliny: {{ form.plant }}
+        {{ form.plant.errors }}
+        <br><br>
         {% if has_subscription %}gratulujeme{% endif %}
         <input type="submit" value="Save">
     </form>

@@ -16,13 +16,19 @@ class GardenForm(forms.ModelForm):
         model = Garden
         fields = ['name', 'description', 'address', 'plant']
 
+    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
+
     def save(self, user):
         garden = super().save(commit=False)
         garden.user = user
         garden.save()
         garden.plant.add(*self.cleaned_data.get('plant'))
 
-    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
+    def clean_plant(self):
+        value = self.cleaned_data['plant']
+        if len(value) > 3:
+            raise forms.ValidationError("Pokud nejste naším členem, je možné vybrat max. 3 rostliny. ")
+        return value
 
 
 class ContactForm(forms.Form):

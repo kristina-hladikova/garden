@@ -9,7 +9,7 @@
        >> <a class="text-dark" href="delete_garden"> Vymazat zahradu</a></i>
 <br><br>
 
-<i><b><p>Popis zahradky: {{garden.description}}<br>
+<i><b><p>Popis zahrádky: {{garden.description}}<br>
 Lokace: {{garden.address}}</p></b></i>
 <p>
     Ve svojí zahrádce máte tyto rostliny:
@@ -18,7 +18,7 @@ Lokace: {{garden.address}}</p></b></i>
     <ul>
     {% for plant in plants %}
         {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
-        <li>{{ plant.name }} <img src="{% static plant_photo %}" class="rounded-circle" width="150"> </li>
+        <li><img src="{% static plant_photo %}" class="img-thumbnail" width="100">{{ plant.name }}</li>
         {% endwith %}
     {% endfor %}
     </ul>
