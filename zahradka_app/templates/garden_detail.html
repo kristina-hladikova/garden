@@ -8,22 +8,28 @@
     <i>>> <a class="text-dark" href="update_garden">Upravit zahradu</a><br>
        >> <a class="text-dark" href="delete_garden"> Vymazat zahradu</a></i>
 <br><br>
+<div class="row">
+  <div class="column">
 
 <i><b><p>Popis zahrádky: {{garden.description}}<br>
 Lokace: {{garden.address}}</p></b></i>
-<p>
+
     Ve svojí zahrádce máte tyto rostliny:
 {% load static %}
+<div style="columns: 100px 3;">
 
     <ul>
     {% for plant in plants %}
         {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
-        <li><img src="{% static plant_photo %}" class="img-thumbnail" width="100">{{ plant.name }}</li>
+        <li>{{ plant.name }}</li>
         {% endwith %}
     {% endfor %}
     </ul>
-<p>
-    <b>Práce na zahrádce ke dni: {{ date }} </b><br><br>
+</div>
+</div>
+<div class="column">
+    <b>Práce na zahrádce ke dni: {{ date|date:"d.m.Y" }}
+ </b><br><br>
 Nastav jiné datum:
 <form action="{% url 'garden_detail' garden.id %}" method="post">
     {% csrf_token %}
@@ -52,4 +58,7 @@ Nastav jiné datum:
 V toto datum nemáte na zahradě žádné práce :-)
 {% endif %}
 </p>
+    </div>
+    </div>
+
 {% endblock body %}

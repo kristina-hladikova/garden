@@ -90,6 +90,7 @@ class Garden(models.Model):
     address = models.CharField(max_length=512)
     plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant")
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    garden_image = models.ImageField()
 
     def __str__(self):
         return f"{self.name}"
