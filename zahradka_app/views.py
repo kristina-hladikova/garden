@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView
 from django.views.generic.edit import FormMixin, CreateView
 
-from zahradka_app.forms import RegistrationForm, GardenForm, ContactForm
+from zahradka_app.forms import GardenForm, ContactForm, SignUpForm
 from zahradka_app.models import Plant, Garden, GardenPlant, Event, Membership, UserMembership, Subscription
 from datetime import date
 
@@ -52,7 +52,7 @@ class ChangePasswordView(PasswordChangeView):
 
 class RegistrationView(FormMixin, TemplateView):
     template_name = "accounts/register.html"
-    form_class = RegistrationForm
+    form_class = SignUpForm
 
     def post(self, request, *args, **kwargs):
         bounded_form = self.form_class(request.POST)
