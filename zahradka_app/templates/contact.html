@@ -3,20 +3,20 @@
 {% block page_title %}Moje Zahrádka: Kontakt{% endblock page_title %}
 {% block body %}
 
-<div style="margin:80px">
+<div class="container">
 		<h1>Kontaktní formulář</h1>
 		<p>
 			V případě jakékoliv otázky nás neváhejte kontaktovat
 		</p>
 		<form method="post">
         {% csrf_token %}
-        Jméno: {{ form.first_name }}
+        Jméno: <br>{{ form.first_name }}
         <br><br>
-        Příjmení: {{ form.last_name }}
+        Příjmení: <br>{{ form.last_name }}
         <br><br>
-        Email: {{ form.email_address }}
+        Email: <br>{{ form.email_address }}
         <br><br>
-        Zpráva: {{ form.message }}
+        Zpráva: <br>{{ form.message }}
         <br><br>
             <button type="submit">Odeslat</button>
         </form>

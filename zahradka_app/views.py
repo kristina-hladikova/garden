@@ -166,7 +166,7 @@ def create_garden(request):
     if form.is_valid():
         form.save(request.user)
 
-        return redirect('/garden')
+        return redirect('/garden/')
     context = {"form": form,
                "has_subscription": subscription_check(request.user)}
     return render(request, "create_garden.html", context)
@@ -187,7 +187,7 @@ def update_garden(request, garden_id):
         form = GardenForm(request.POST or None, request.FILES, instance=garden, user=request.user)
         if form.is_valid():
             form.save(request.user)
-            return redirect('/garden/')
+            return redirect(f'/garden/{garden_id}')
         else:
             context = {
                 "form": form,
@@ -199,7 +199,7 @@ def update_garden(request, garden_id):
 def delete_garden(request, garden_id):
     garden = Garden.objects.get(id=garden_id)
     garden.delete()
-    return redirect('/')
+    return redirect('/garden/')
 
 
 def contact(request):

@@ -2,13 +2,13 @@
 {% block page_title %}Moje zahrádka: Zahrádka{% endblock page_title %}
 {% block body %}
 
-
+<div class="container">
 <h1>Moje zahrádka: {{garden.name}}</h1><br>
 
     <i>>> <a class="text-dark" href="update_garden">Upravit zahradu</a><br>
        >> <a class="text-dark" href="delete_garden"> Vymazat zahradu</a></i>
 <br><br>
-<div class="row">
+<!--<div class="row">-->
   <div class="column left">
 
 <i><b><p>Popis zahrádky: {{garden.description}}<br>
@@ -64,5 +64,5 @@ V toto datum nemáte na zahradě žádné práce :-)
 </p>
     </div>
     </div>
-
+</div>
 {% endblock body %}
