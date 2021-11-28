@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block page_title %}Moje Zahrádka{% endblock page_title %}
+{% block page_title %}Moje Zahrádka: Kontakt{% endblock page_title %}
 {% block body %}
 
 <div style="margin:80px">
@@ -10,8 +10,15 @@
 		</p>
 		<form method="post">
         {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">Submit</button>
+        Jméno: {{ form.first_name }}
+        <br><br>
+        Příjmení: {{ form.last_name }}
+        <br><br>
+        Email: {{ form.email_address }}
+        <br><br>
+        Zpráva: {{ form.message }}
+        <br><br>
+            <button type="submit">Odeslat</button>
         </form>
     </div>
 

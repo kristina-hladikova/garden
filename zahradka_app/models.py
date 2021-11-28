@@ -93,7 +93,7 @@ class Garden(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, default='')
     address = models.CharField(max_length=512)
-    plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant")
+    plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant", blank=True)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     garden_image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
 

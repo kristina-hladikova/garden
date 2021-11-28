@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -15,14 +16,14 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            background: #7abecc !important;
+            background: #ccffcc !important;
         }
 
         .user_card {
             width: 350px;
-            margin-top: auto;
+            margin-top: 70px;
             margin-bottom: auto;
-            background: #74cfbf;
+            background: #28a745;
             position: relative;
             display: flex;
             justify-content: center;
@@ -45,7 +46,7 @@
 
         .login_btn {
             width: 100%;
-            background: #33ccff !important;
+            background: #ffc107 !important;
             color: white !important;
         }
 
@@ -59,7 +60,7 @@
         }
 
         .input-group-text {
-            background: #f7ba5b !important;
+            background: #ffc107  !important;
             color: white !important;
             border: 0 !important;
             border-radius: 0.25rem 0 0 0.25rem !important;
@@ -70,11 +71,73 @@
             box-shadow: none !important;
             outline: 0px !important;
         }
+.active {
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #ffc107 !important;
+}
 
     </style>
 
 </head>
-<body>
+<body style="background-color:#ccffcc; !important;">
+   <!--Navbar Starts Here-->
+    <nav class="navbar navbar-expand-lg bg-success navbar-dark mb-4" >
+        <a class="navbar-brand" href="{% url 'homepage' %}"><img src="{% static "zahradka_app/logo/logo_zahradka.png" %}" alt="logo" style="width:150px;"></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'homepage' %}" style="">Domů <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'contact' %}">Kontakt <span class="sr-only">(current)</span></a>
+        </li>
+        </ul>
+        {% if user.is_authenticated %}
+
+
+        <ul class="navbar-nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'garden' %}active{% endif %}" href="{% url 'garden' %}">Moje zahrady <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'create_garden' %}active{% endif %}" href="{% url 'create_garden' %}">Založit zahrádku <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'membership' %}active{% endif %}" href="{% url 'membership' %}">Členství <span class="sr-only">(current)</span></a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'change_password' %}active{% endif %}" href="{% url 'change_password' %}">Změnit heslo <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'logout' %}active{% endif %}" href="{% url 'logout' %}">Odhlásit <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-link" >
+            Přihlášený uživatel: {{user.username}}
+        </li>
+        </ul>
+<!--        <form class="form-inline my-2 my-lg-0"  action="#" method='GET'>-->
+<!--            <input class="form-control mr-sm-2" type="search" name='q' aria-label="Hledat" placeholder='Hledat' value={{request.GET.q}}  >-->
+<!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Hledat</button>-->
+<!--        </form>-->
+        {% else %}
+
+        <a class="btn btn-outline-warning" href="{% url 'login' %}">Přihlášení</a> <br><br>
+        <a class="btn btn-warning" style="margin-left: 15px;" href="{% url 'register' %}">Registrace</a>
+
+        {% endif %}
+    </div>
+    </nav>
+    <!--Navbar Ends-->
+
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
         <div class="user_card">
@@ -118,7 +181,7 @@
             {{ form.errors }}
             <div class="mt-4">
                 <div class="d-flex justify-content-center links">
-                   Už máte u nás účet? <a href="{% url 'login' %}" class="ml-2">Přihlásit</a>
+                   Už máte u nás účet? <a href="{% url 'login' %}" class="ml-2 text-warning">Přihlásit</a>
                 </div>
             </div>
         </div>

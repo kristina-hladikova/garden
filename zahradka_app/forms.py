@@ -47,7 +47,7 @@ class GardenForm(forms.ModelForm):
         model = Garden
         fields = ['name', 'description', 'address', 'garden_image', 'plant']
 
-    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
+    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all().order_by("name")   )
 
     def save(self, user):
         garden = super().save(commit=False)

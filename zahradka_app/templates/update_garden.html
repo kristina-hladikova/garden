@@ -1,10 +1,28 @@
 {% extends 'base.html' %}
-{% block page_title %}Zahrádka{% endblock page_title %}
+{% block page_title %}Moje zahrádka: Nastavení{% endblock page_title %}
 {% block body %}
-<h1>Update zahrady</h1><br>
-    <form action="{% url 'update_garden' garden_id %}" method="post" enctype="multipart/form-data">
+<h1>Nastavení zahrádky</h1><br>
+    <div class="row">
+  <div class="column left">
+      <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
+        Název tvoji zahrádky: {{ form.name }}
+        <br><br>
+        Opiš svoji zahrádku: {{ form.description }}
+        <br><br>
+        Lokace: {{ form.address }}
+        <br><br>
+        Foto: {{ form.garden_image }}
+        <br><br>
+          </div>
+<div class="column right">
+        Vyber rostliny: {{ form.plant }}
+        {{ form.plant.errors }}
+        <br><br>
+        {% if has_subscription %}gratulujeme{% endif %}
+        <input type="submit" value="Uložit">
     </form>
+        </div>
+    </div>
+
 {% endblock body %}

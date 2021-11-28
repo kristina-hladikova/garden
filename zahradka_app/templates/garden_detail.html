@@ -1,5 +1,5 @@
     {% extends 'base.html' %}
-{% block page_title %}Zahrádka{% endblock page_title %}
+{% block page_title %}Moje zahrádka: Zahrádka{% endblock page_title %}
 {% block body %}
 
 
@@ -13,7 +13,9 @@
 
 <i><b><p>Popis zahrádky: {{garden.description}}<br>
 Lokace: {{garden.address}}</p></b>
+    {% if garden.garden_image %}
 Foto: <img src="/media/{{garden.garden_image}}" alt="Foto zahradky" width="230px"></i>
+      {% endif %}
       <br>
       <br>
     Ve svojí zahrádce máte tyto rostliny:

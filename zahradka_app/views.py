@@ -92,7 +92,7 @@ def garden(request):
 @login_required(login_url='login')
 def garden_detail(request, garden_id):
     garden = Garden.objects.get(id=garden_id)
-    plants = Plant.objects.filter(gardens__id=garden_id)
+    plants = Plant.objects.filter(gardens__id=garden_id).order_by("name")
     calendar_str = request.POST.get('calendar')
     if calendar_str:
         my_today = date.fromisoformat(calendar_str)
