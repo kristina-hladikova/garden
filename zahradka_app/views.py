@@ -162,7 +162,7 @@ def subscription_check(user):
 
 #@user_passes_test(subscription_check, login_url='/membership/')
 def create_garden(request):
-    form = GardenForm(request.POST or None, user=request.user)
+    form = GardenForm(request.POST or None, request.FILES, user=request.user)
     if form.is_valid():
         form.save(request.user)
 
@@ -175,12 +175,25 @@ def create_garden(request):
 # @user_passes_test(subscription_check)
 def update_garden(request, garden_id):
     garden = Garden.objects.get(id=garden_id)
-    form = GardenForm(request.POST or None, instance=garden, user=request.user)
-    if form.is_valid():
-        form.save(request.user)
-        return redirect('/garden')
-    context = {"form": form}
-    return render(request, "update_garden.html", context)
+    if request.method == 'GET':
+        form = GardenForm(request.POST or None, instance=garden, user=request.user)
+        context = {
+            "form": form,
+            "garden_id": garden_id
+        }
+        return render(request, "update_garden.html", context)
+
+    elif request.method == 'POST':
+        form = GardenForm(request.POST or None, request.FILES, instance=garden, user=request.user)
+        if form.is_valid():
+            form.save(request.user)
+            return redirect('/garden/')
+        else:
+            context = {
+                "form": form,
+                "garden_id": garden_id
+            }
+            return render(request, "update_garden.html", context)
 
 
 def delete_garden(request, garden_id):

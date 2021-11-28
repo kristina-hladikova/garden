@@ -3,13 +3,15 @@
 {% block body %}
 
 <h1>Vytvoření zahrady</h1><br>
-    <form action="{{ action_url }}" method="post">
+    <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         Název tvoji zahrádky: {{ form.name }}
         <br><br>
         Opiš svoji zahrádku: {{ form.description }}
         <br><br>
         Lokace: {{ form.address }}
+        <br><br>
+        Foto: {{ form.garden_image }}
         <br><br>
         Vyber rostliny: {{ form.plant }}
         {{ form.plant.errors }}

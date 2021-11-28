@@ -9,11 +9,13 @@
        >> <a class="text-dark" href="delete_garden"> Vymazat zahradu</a></i>
 <br><br>
 <div class="row">
-  <div class="column">
+  <div class="column left">
 
 <i><b><p>Popis zahrádky: {{garden.description}}<br>
-Lokace: {{garden.address}}</p></b></i>
-
+Lokace: {{garden.address}}</p></b>
+Foto: <img src="/media/{{garden.garden_image}}" alt="Foto zahradky" width="230px"></i>
+      <br>
+      <br>
     Ve svojí zahrádce máte tyto rostliny:
 {% load static %}
 <div style="columns: 100px 3;">
@@ -27,7 +29,7 @@ Lokace: {{garden.address}}</p></b></i>
     </ul>
 </div>
 </div>
-<div class="column">
+<div class="column right">
     <b>Práce na zahrádce ke dni: {{ date|date:"d.m.Y" }}
  </b><br><br>
 Nastav jiné datum:

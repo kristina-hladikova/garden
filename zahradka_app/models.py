@@ -84,13 +84,20 @@ class TimeOfEvent(models.Model):
         super().save(*args, **kwargs)  # Call the "real" save() method.
 
 
+def user_directory_path(garden, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(garden.user.id, filename)
+
+
 class Garden(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, default='')
     address = models.CharField(max_length=512)
     plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant")
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    garden_image = models.ImageField()
+    garden_image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+
+
 
     def __str__(self):
         return f"{self.name}"

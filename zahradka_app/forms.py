@@ -45,7 +45,7 @@ class GardenForm(forms.ModelForm):
 
     class Meta:
         model = Garden
-        fields = ['name', 'description', 'address', 'plant']
+        fields = ['name', 'description', 'address', 'garden_image', 'plant']
 
     plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all())
 

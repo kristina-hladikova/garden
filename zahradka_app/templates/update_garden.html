@@ -2,7 +2,7 @@
 {% block page_title %}Zahrádka{% endblock page_title %}
 {% block body %}
 <h1>Update zahrady</h1><br>
-    <form action="{{ action_url }}" method="post">
+    <form action="{% url 'update_garden' garden_id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Save">

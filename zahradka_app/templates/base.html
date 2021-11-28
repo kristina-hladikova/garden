@@ -15,16 +15,22 @@
   width: 40%;
 }
 .right {
-  width: 55%;
+  width: 60%;
 }
+/*a:visited {font-weight:bold;}*/
+#navigation li a:active{
+    font-weight:bold;
+    color: #ffffff;}
+
 </style>
 </head>
 <body style="background-color:#ccffcc;">
 
 
     <!--Navbar Starts Here-->
-    <nav class="navbar navbar-expand-lg bg-success navbar-dark mb-4">
-    <a class="navbar-brand" href="{% url 'homepage' %}"><img src="static/logo zahradka.png" alt="logo" style="width:150px;"></a>
+    <nav class="navbar navbar-expand-lg bg-success navbar-dark mb-4" >
+        <a class="navbar-brand" href="{% url 'homepage' %}"><img src="{% static "zahradka_app/logo/logo_zahradka.png" %}" alt="logo" style="width:150px;"></a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,33 +38,33 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'homepage' %}">Domů <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'homepage' %}" style="">Domů <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'contact' %}">Kontakt <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'contact' %}">Kontakt <span class="sr-only">(current)</span></a>
         </li>
         </ul>
         {% if user.is_authenticated %}
 
 
-        <ul class="navbar-nav justify-content-end" >
+        <ul class="navbar-nav justify-content-end">
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'garden' %}">Moje zahrady <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'garden' %}">Moje zahrady <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'create_garden' %}">Založit zahrádku <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'create_garden' %}">Založit zahrádku <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'membership' %}">Členství <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'membership' %}">Členství <span class="sr-only">(current)</span></a>
         </li>
             <li class="nav-item active">
-            <a class="nav-link" href="{% url 'change_password' %}">Změnit heslo <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'change_password' %}">Změnit heslo <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item active">
-            <a class="nav-link" href="{% url 'logout' %}">Odhlásit <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-warning" href="{% url 'logout' %}">Odhlásit <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-link" >
+        <li class="nav-link text-warning" >
             Přihlášený uživatel: {{user.username}}
         </li>
         </ul>
@@ -68,8 +74,8 @@
 <!--        </form>-->
         {% else %}
 
-        <a class="btn btn-outline-secondary" href="{% url 'login' %}">Přihlášení</a>
-        <a class="btn btn-dark ml-2 mr-2" href="{% url 'register' %}">Registrace</a>
+        <a class="btn btn-outline-warning" href="{% url 'login' %}">Přihlášení</a>
+        <a class="btn btn-warning" href="{% url 'register' %}">Registrace</a>
 
         {% endif %}
     </div>
