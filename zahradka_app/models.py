@@ -28,14 +28,17 @@ class Plant(models.Model):
         (DECORATIVE, 'Okrasné'),
     ]
     type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
-    plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None, max_length=20, blank=True)
-
+    plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None,
+                                    max_length=20, blank=True)
+    place = models.CharField(max_length=256, default='')
+    soil = models.CharField(max_length=256, default='')
+    other = models.CharField(max_length=256, default='')
 
     def __str__(self):
         return f"{self.name}"
 
-class Event(models.Model):
 
+class Event(models.Model):
     PLANTING = 'PL'
     TRANSPLANTING = 'TR'
     VACCINATION = 'VA'
@@ -45,6 +48,7 @@ class Event(models.Model):
     FERTILISATION = 'FE'
     REJUVENATION = 'RE'
     PRUNING = 'PR'
+    OTHER = 'OT'
     TYPE_EVENT_CHOICES = [
         (PLANTING, 'Výsadba'),
         (TRANSPLANTING, 'Přesazování'),
@@ -55,6 +59,7 @@ class Event(models.Model):
         (FERTILISATION, 'Hnojení'),
         (REJUVENATION, 'Zmlazování'),
         (PRUNING, 'Stříhání'),
+        (OTHER, 'Iné'),
     ]
     name = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
     description = models.TextField(blank=True, default='')
@@ -77,7 +82,6 @@ class TimeOfEvent(models.Model):
     end_date = models.DateField()
     event = models.ForeignKey(Event, related_name="dates", on_delete=models.CASCADE)
 
-
     def save(self, *args, **kwargs):
         self.start_date = datetime.date(year=1970, month=self.start_date.month, day=self.start_date.day)
         self.end_date = datetime.date(year=1970, month=self.end_date.month, day=self.end_date.day)
@@ -96,8 +100,6 @@ class Garden(models.Model):
     plant = models.ManyToManyField(Plant, related_name="gardens", through="GardenPlant", blank=True)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     garden_image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
-
-
 
     def __str__(self):
         return f"{self.name}"
@@ -126,13 +128,11 @@ class Membership(models.Model):
     membership_type = models.CharField(choices=MEMBERSHIP_CHOICES, default=FREE, max_length=30)
     price = models.DecimalField(default=0, max_digits=999, decimal_places=2)
 
+    def __str__(self):
+        return f"{self.get_membership_type_display()}"
 
     def __str__(self):
-       return f"{self.get_membership_type_display()}"
-
-
-    def __str__(self):
-       return self.membership_type
+        return self.membership_type
 
 
 class UserMembership(models.Model):
@@ -140,7 +140,7 @@ class UserMembership(models.Model):
     membership = models.ForeignKey(Membership, related_name='user_membership', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-       return self.user.username
+        return self.user.username
 
 
 class Subscription(models.Model):
@@ -148,15 +148,4 @@ class Subscription(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-      return self.user_membership.user.username
-
-
-
-
-
-
-
-
-
-
-
+        return self.user_membership.user.username

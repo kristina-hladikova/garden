@@ -101,7 +101,6 @@ def garden_detail(request, garden_id):
     shifted_today = date(year=1970, month=my_today.month, day=my_today.day)
     events = Event.objects.filter(plant__gardens__id=garden_id)
     events = events.filter(dates__start_date__lte=shifted_today, dates__end_date__gte=shifted_today)
-
     context = {
         "garden": garden,
         'plants': plants,

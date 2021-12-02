@@ -48,14 +48,12 @@ Nastav jiné datum:
     {% if events %}
     <h2>Práce na zahrádce:</h2>
  <ul>{% for event in events %}
-                    <li>
-                       {{ event }}: {{ event.description }}
-
-                    </li>
-                    {% endfor %}
-                </ul>
-
-
+        <details>
+          <summary>{{ event }}</summary>
+          <p>{{ event.description }}</p>
+        </details>
+     {% endfor %}
+ </ul>
 
     {% else %}
     <h2>Práce na zahrádce:</h2>
