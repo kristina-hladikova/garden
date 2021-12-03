@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}Moje Zahrádka: Kontakt{% endblock page_title %}
+{% block body %}
+
+<div class="container">
+	{% if plants %}
+
+    <ul>
+    {% for plant in plants %}
+        <details>
+          <img src="{% static 'plant_photos/'|add:plant.name|add:'.jpg' %}" height="100px">
+          <summary>{{ plant.name }}</summary>
+          <p>{{ plant.description }}</p>
+        </details>
+    {% endfor %}
+    </ul>
+
+{% else %}
+V této kategorii nejsou žádne rostliny
+{% endif %}
+</div>
+
+{% endblock body %}

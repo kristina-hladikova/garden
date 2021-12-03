@@ -22,10 +22,12 @@ class Plant(models.Model):
     FRUIT = 'FR'
     VEGETABLE = 'VE'
     DECORATIVE = 'DE'
+    OTHER = 'OT'
     TYPE_NAME_CHOICES = [
         (FRUIT, 'Ovoce'),
         (VEGETABLE, 'Zelenina'),
         (DECORATIVE, 'Okrasné'),
+        (OTHER, 'Ostatní'),
     ]
     type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
     plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None,

@@ -1,10 +1,49 @@
+
 {% extends 'base.html' %}
+{% load static %}
 {% block page_title %}Zahrádka{% endblock page_title %}
 {% block body %}
 <div class="container">
 <h1>Moje zahrádka</h1><br>
 <p>
 Vítejte na stránkách, kde si můžete nastavit zahrádku, přiřadit rostliny a sledovat, jaké povinnosti vás na zahrádce čekají :-)
+
 </p>
+  <p>Podívejte se jaké rostliny mít ve Vaší zahrádce.</p>
+
+<div class="container">
+
+<div class="column left">
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h5 class="card-title">Drobné voce</h5>
+      <a href="{% url 'fruit' %}" class="btn btn-warning">Seznam drobného ovoce</a>
+    </div>
+  </div>
+  <br>
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h5 class="card-title">Zelenina</h5>
+      <a href="{% url 'vegetable' %}" class="btn btn-warning">Seznam zeleniny</a>
+    </div>
+  </div>
+</div>
+<div class="column right">
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h5 class="card-title">Bylinky</h5>
+      <a href="{% url 'herbs' %}" class="btn btn-warning">Seznam bylinek</a>
+    </div>
+  </div>
+  <br>
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h5 class="card-title">Ovocné stromy</h5>
+      <a href="{% url 'fruit_tree' %}" class="btn btn-warning">Seznam ovocných stromů</a>
+    </div>
+  </div>
+</div>
+</div>
+
 </div>
 {% endblock body %}

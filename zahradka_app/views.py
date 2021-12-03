@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm
-#from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
@@ -19,10 +19,16 @@ from zahradka_app.utils import get_user_membership
 from typing import Optional
 
 
-
-
 def homepage(request):
     return render(request, "homepage.html")
+
+# def homepage(request):
+#     plants = Plant.objects.all()
+#     context = {
+#         'plants': plants
+#     }
+#     return render(request, 'homepage.html', context=context)
+
 
 
 class LogoutView(View):
@@ -110,56 +116,12 @@ def garden_detail(request, garden_id):
     }
     return render(request, 'garden_detail.html', context=context)
 
-# @login_required(login_url='login')
-# def garden_settings(request, ...):
-
-
-# class GardenSettingsView(View):
-#     template_name = 'garden_settings.html'
-#     model = GardenPlant
-#
-#     def get(self, request, garden_name, *args, **kwargs):
-#         garden_id = Garden.objects.get(name=garden_name).id
-#         garden = Garden.objects.get(id=garden_id)
-#
-#         context = {
-#             'name': garden.name,
-#             'description': garden.description,
-#             'address': garden.address,
-#             'plants': Plant.objects.all(),
-#         }
-#
-#         return render(request, 'garden_settings.html', context=context)
-#
-#
-#     def post(self, request, plant, *args, **kwargs):
-#         gardenplant = self.get_object()
-#         gardenplant.add(plant)
-#         gardenplant.save()
-#         return self.get(request, *args, **kwargs)
-
-
-# class EditGardenMixin:
-#     template_name = 'create_garden.html'
-#     form_class = GardenForm
-#     model = Garden
-#
-#     def get_success_url(self):
-#         return resolve_url('garden_detail')
-#
-#
-# class CreateGardenView(EditGardenMixin, CreateView):
-#     def get_context_data(self, **kwargs):
-#         context = super(CreateGardenView, self).get_context_data(**kwargs)
-#         context.update({
-#             'action_url': resolve_url('create_garden')
-#         })
-#         return context
 
 def subscription_check(user):
     return UserMembership.objects.get(user=user).membership.membership_type == Membership.PLUS
 
-#@user_passes_test(subscription_check, login_url='/membership/')
+
+# @user_passes_test(subscription_check, login_url='/membership/')
 def create_garden(request):
     form = GardenForm(request.POST or None, request.FILES, user=request.user)
     if form.is_valid():
@@ -227,7 +189,6 @@ def contact(request):
 class MembershipView(ListView):
     model = Membership
     template_name = 'membership.html'
-
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)

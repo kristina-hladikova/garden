@@ -4,7 +4,7 @@
 <div class="container">
 <h1>Nastavení zahrádky</h1><br>
 <!--    <div class="row">-->
-  <div class="column left">
+    <div class="column left">
       <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         Název tvoji zahrádky: <br>{{ form.name }}
@@ -15,15 +15,14 @@
         <br><br>
         Foto: <br>{{ form.garden_image }}
         <br><br>
-          </div>
-<div class="column right">
+    </div>
+    <div class="column right">
         Vyber rostliny: {{ form.plant }}
         {{ form.plant.errors }}
         <br><br>
         {% if has_subscription %}Gratulujeme, máte členství PLUS.{% endif %}
         <input type="submit" value="Uložit">
-    </form>
-        </div>
+        </form>
     </div>
 </div>
 {% endblock body %}

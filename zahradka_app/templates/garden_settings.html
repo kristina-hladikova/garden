@@ -8,11 +8,11 @@
 <p>Lokace: {{address}}</p>
 <p>Foto: {{garden_image}}</p>
 <p>
- <ul>
-    Rostliny:{% for plant in plants %}
+    <ul>
+    Rostliny:
+        {% for plant in plants %}
         <li> {{ plant.name }}</li>
-
-    {% endfor %}
+        {% endfor %}
     </ul>
 
 </p>

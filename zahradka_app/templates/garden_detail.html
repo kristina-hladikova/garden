@@ -10,57 +10,51 @@
 <br><br>
 <!--<div class="row">-->
   <div class="column left">
-
-<i><b><p>Popis zahrádky: {{garden.description}}<br>
-Lokace: {{garden.address}}</p></b>
-    {% if garden.garden_image %}
-Foto: <img src="/media/{{garden.garden_image}}" alt="Foto zahradky" width="230px"></i>
+    <i><b>
+        <p>Popis zahrádky: {{garden.description}}<br>
+        Lokace: {{garden.address}}</p></b>
+      {% if garden.garden_image %}
+        Foto: <img src="/media/{{garden.garden_image}}" alt="Foto zahradky" width="230px"></i>
       {% endif %}
       <br>
       <br>
     Ve svojí zahrádce máte tyto rostliny:
 {% load static %}
-<div style="columns: 100px 3;">
-
+    <div style="columns: 100px 3;">
     <ul>
-    {% for plant in plants %}
+        {% for plant in plants %}
         {% with 'plant_photos/'|add:plant.name|add:'.jpg' as plant_photo %}
         <li>{{ plant.name }}</li>
         {% endwith %}
-    {% endfor %}
+        {% endfor %}
     </ul>
-</div>
-</div>
+    </div>
+  </div>
 <div class="column right">
     <b>Práce na zahrádce ke dni: {{ date|date:"d.m.Y" }}
- </b><br><br>
-Nastav jiné datum:
-<form action="{% url 'garden_detail' garden.id %}" method="post">
+    </b><br><br>
+    Nastav jiné datum:
+    <form action="{% url 'garden_detail' garden.id %}" method="post">
     {% csrf_token %}
-<label> <input type="date" name="calendar"> vybrat datum</label>
+    <label> <input type="date" name="calendar"> vybrat datum</label>
     <input type="submit" class="btn btn-outline-secondary" value="Odeslat">
-<!--    onclick ajax -->
     </form>
-
-
-
-</p>
+    </p>
     {% if events %}
-    <h2>Práce na zahrádce:</h2>
- <ul>{% for event in events %}
+        <h2>Práce na zahrádce:</h2>
+        <ul>{% for event in events %}
         <details>
           <summary>{{ event }}</summary>
           <p>{{ event.description }}</p>
         </details>
-     {% endfor %}
- </ul>
-
+        {% endfor %}
+        </ul>
     {% else %}
-    <h2>Práce na zahrádce:</h2>
-V toto datum nemáte na zahradě žádné práce :-)
-{% endif %}
-</p>
+        <h2>Práce na zahrádce:</h2>
+        V toto datum nemáte na zahradě žádné práce :-)
+    {% endif %}
+    </p>
     </div>
-    </div>
+  </div>
 </div>
 {% endblock body %}

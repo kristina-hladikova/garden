@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-
 from zahradka_app.models import Garden, Plant, Membership, UserMembership, Subscription
 from zahradka_app.utils import get_user_membership
 
@@ -11,7 +10,6 @@ from zahradka_app.utils import get_user_membership
 #     class Meta:
 #         model = User
 #         fields = ['username', 'email', 'password1', 'password2']
-
 
 
 class SignUpForm(UserCreationForm):
@@ -47,7 +45,8 @@ class GardenForm(forms.ModelForm):
         model = Garden
         fields = ['name', 'description', 'address', 'garden_image', 'plant']
 
-    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Plant.objects.all().order_by("name")   )
+    plant = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                           queryset=Plant.objects.all().order_by('name'))
 
     def save(self, user):
         garden = super().save(commit=False)
@@ -59,7 +58,6 @@ class GardenForm(forms.ModelForm):
         membership = get_user_membership(self.user)
         value = self.cleaned_data['plant']
         if membership.membership_type != Membership.PLUS:
-
 
             if len(value) > 3:
                 raise forms.ValidationError("Pokud nejste naším členem, je možné vybrat max. 3 rostliny. ")
