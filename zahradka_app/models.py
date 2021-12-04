@@ -31,10 +31,10 @@ class Plant(models.Model):
     ]
     type = models.CharField(choices=TYPE_NAME_CHOICES, max_length=2, unique=False)
     plant_image = models.ImageField(null=True, upload_to='static/plant_photos/', height_field=None, width_field=None,
-                                    max_length=20, blank=True)
+                                    max_length=256, blank=True)
     place = models.CharField(max_length=256, default='')
     soil = models.CharField(max_length=256, default='')
-    other = models.CharField(max_length=256, default='')
+    other = models.CharField(max_length=256, default='', blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -52,16 +52,16 @@ class Event(models.Model):
     PRUNING = 'PR'
     OTHER = 'OT'
     TYPE_EVENT_CHOICES = [
-        (PLANTING, 'Výsadba'),
-        (TRANSPLANTING, 'Přesazování'),
-        (VACCINATION, 'Očkování'),
-        (GRAFTING, 'Roubování'),
-        (PEST_CONTROL, 'Ochrana proti škůdcům'),
-        (HARVESTING, 'Sklizeň'),
-        (FERTILISATION, 'Hnojení'),
-        (REJUVENATION, 'Zmlazování'),
-        (PRUNING, 'Stříhání'),
-        (OTHER, 'Iné'),
+        (PLANTING, 'výsadba'),
+        (TRANSPLANTING, 'přesazování'),
+        (VACCINATION, 'očkování'),
+        (GRAFTING, 'roubování'),
+        (PEST_CONTROL, 'ošetření'),
+        (HARVESTING, 'sklizeň'),
+        (FERTILISATION, 'hnojení'),
+        (REJUVENATION, 'zmlazování'),
+        (PRUNING, 'stříhání'),
+        (OTHER, 'jiné'),
     ]
     name = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
     description = models.TextField(blank=True, default='')
@@ -76,7 +76,7 @@ class Event(models.Model):
     #     return f'{self.get_name_display()}'
 
     def __str__(self):
-        return f"{self.plant.name} - {self.get_name_display()}"
+        return f"{self.plant.name} - {self.get_name_display()} ({self.id})"
 
 
 class TimeOfEvent(models.Model):

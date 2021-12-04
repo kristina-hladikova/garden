@@ -44,7 +44,7 @@
         <h2>Práce na zahrádce:</h2>
         <ul>{% for event in events %}
         <details>
-          <summary>{{ event }}</summary>
+          <summary>{{ event.plant.name }} - {{ event.get_name_display }}</summary>
           <p>{{ event.description }}</p>
         </details>
         {% endfor %}
