@@ -52,16 +52,16 @@ class Event(models.Model):
     PRUNING = 'PR'
     OTHER = 'OT'
     TYPE_EVENT_CHOICES = [
-        (PLANTING, 'Výsadba'),
-        (TRANSPLANTING, 'Přesazování'),
-        (VACCINATION, 'Očkování'),
-        (GRAFTING, 'Roubování'),
-        (PEST_CONTROL, 'Ochrana proti škůdcům'),
-        (HARVESTING, 'Sklizeň'),
-        (FERTILISATION, 'Hnojení'),
-        (REJUVENATION, 'Zmlazování'),
-        (PRUNING, 'Stříhání'),
-        (OTHER, 'Iné'),
+        (PLANTING, 'výsadba'),
+        (TRANSPLANTING, 'přesazování'),
+        (VACCINATION, 'očkování'),
+        (GRAFTING, 'roubování'),
+        (PEST_CONTROL, 'ošetření'),
+        (HARVESTING, 'sklizeň'),
+        (FERTILISATION, 'hnojení'),
+        (REJUVENATION, 'zmlazování'),
+        (PRUNING, 'stříhání'),
+        (OTHER, 'jiné'),
     ]
     name = models.CharField(choices=TYPE_EVENT_CHOICES, max_length=20, unique=False)
     description = models.TextField(blank=True, default='')
