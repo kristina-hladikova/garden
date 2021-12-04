@@ -1,8 +1,6 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
@@ -16,19 +14,10 @@ from zahradka_app.forms import GardenForm, ContactForm, SignUpForm
 from zahradka_app.models import Plant, Garden, GardenPlant, Event, Membership, UserMembership, Subscription
 from datetime import date
 from zahradka_app.utils import get_user_membership
-from typing import Optional
 
 
 def homepage(request):
     return render(request, "homepage.html")
-
-# def homepage(request):
-#     plants = Plant.objects.all()
-#     context = {
-#         'plants': plants
-#     }
-#     return render(request, 'homepage.html', context=context)
-
 
 
 class LogoutView(View):
@@ -47,7 +36,6 @@ class LoginView(FormMixin, TemplateView):
         user = authenticate(request, username=username, password=password)
 
         if user is None:
-            # TODO add messages
             return redirect("login")
 
         login(request, user)
@@ -70,20 +58,6 @@ class RegistrationView(FormMixin, TemplateView):
             return redirect("homepage")
         else:
             return TemplateResponse(request, "accounts/register.html", context={"form": bounded_form})
-
-
-# class GardenView(LoginRequiredMixin, TemplateView):
-#     template_name = "garden.html"
-#
-#     def get(self, request, garden_id, *args, **kwargs):
-#         plants_db = Garden.plant.objects.all() #objects.all().filter(name=garden_id)
-#         context = {
-#             'name': Garden.name,
-#             'description': Garden.description,
-#             'address': Garden.description,
-#             'plant': plants_db,
-#         }
-#         return TemplateResponse(request, 'garden.html', context=context)
 
 
 @login_required(login_url='login')

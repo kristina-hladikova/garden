@@ -67,14 +67,6 @@ class Event(models.Model):
     description = models.TextField(blank=True, default='')
     plant = models.ForeignKey(Plant, related_name="events", on_delete=models.CASCADE)
 
-    # def is_event_planting(self) -> bool:
-    #     return self.name == self.PLANTING
-
-    # def get_name_display(self):
-    #     return {self.event.name}
-    # def __str__(self):
-    #     return f'{self.get_name_display()}'
-
     def __str__(self):
         return f"{self.plant.name} - {self.get_name_display()} ({self.id})"
 

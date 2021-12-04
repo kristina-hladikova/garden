@@ -17,8 +17,10 @@ class TimeOfEventAdmin(admin.ModelAdmin):
 class GardenAdmin(admin.ModelAdmin):
     pass
 
+
 class GardenPlantAdmin(admin.ModelAdmin):
     pass
+
 
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(Event, EventAdmin)

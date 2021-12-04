@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.db.models import Q
 from zahradka_app.models import Plant
 
 
@@ -12,7 +12,7 @@ def vegetable(request):
 
 
 def fruit(request):
-    plants = Plant.objects.filter(type='FR', species='HR' or 'BU').order_by('name')
+    plants = Plant.objects.filter(Q(type='FR') & Q(species='HR')).order_by('name') | Plant.objects.filter(Q(type='FR') & Q(species='BU')).order_by('name')
     context = {
         'plants': plants,
     }

@@ -6,12 +6,6 @@ from zahradka_app.models import Garden, Plant, Membership, UserMembership, Subsc
 from zahradka_app.utils import get_user_membership
 
 
-# class RegistrationForm(UserCreationForm):
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password1', 'password2']
-
-
 class SignUpForm(UserCreationForm):
     try:
         free_membership = Membership.objects.get(membership_type=Membership.FREE)
