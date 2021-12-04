@@ -52,7 +52,8 @@ class GardenForm(forms.ModelForm):
         garden = super().save(commit=False)
         garden.user = user
         garden.save()
-        garden.plant.add(*self.cleaned_data.get('plant'))
+        garden.plant.set(self.cleaned_data.get('plant'))
+
 
     def clean_plant(self):
         membership = get_user_membership(self.user)
