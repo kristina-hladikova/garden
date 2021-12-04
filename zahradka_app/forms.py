@@ -13,10 +13,10 @@ from zahradka_app.utils import get_user_membership
 
 
 class SignUpForm(UserCreationForm):
-    # try:
-    #     free_membership = Membership.objects.get(membership_type=Membership.FREE)
-    # except Membership.DoesNotExist:
-    #     pass
+    try:
+        free_membership = Membership.objects.get(membership_type=Membership.FREE)
+    except Membership.DoesNotExist:
+        pass
 
     class Meta(UserCreationForm.Meta):
         model = User
