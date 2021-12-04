@@ -143,7 +143,7 @@ LOGIN_URL = 'login/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 if "DYNO" in os.environ:
-    STATIC_ROOT = 'static'
+    STATIC_ROOT = 'staticfiles/'
     ALLOWED_HOSTS = ['gardenmanagement.herokuapp.com']
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
