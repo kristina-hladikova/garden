@@ -76,7 +76,7 @@ class Event(models.Model):
     #     return f'{self.get_name_display()}'
 
     def __str__(self):
-        return f"{self.plant.name} - {self.get_name_display()}"
+        return f"{self.plant.name} - {self.get_name_display()} ({self.id})"
 
 
 class TimeOfEvent(models.Model):
