@@ -9,7 +9,7 @@ media
 # Backup files #
 *.bak
 
-static/
+#static/
 staticfiles/
 
 # If you are using PyCharm #
