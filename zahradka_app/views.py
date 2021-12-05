@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, HttpResponse, resolve_url, redirect
 from django.template.response import TemplateResponse
@@ -42,9 +42,13 @@ class LoginView(FormMixin, TemplateView):
         return redirect("homepage")
 
 
-class ChangePasswordView(PasswordChangeView):
+class MyChangePasswordView(PasswordChangeView):
     template_name = "accounts/change_password.html"
     success_url = reverse_lazy("homepage")
+
+#
+# class MyPasswordResetDoneView(PasswordResetDoneView):
+#     template_name = "accounts/password_done.html"
 
 
 class RegistrationView(FormMixin, TemplateView):
