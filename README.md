@@ -14,7 +14,7 @@ HTTPS: https://github.com/kristina-hladikova/Zahradka.git
 SSH: git@github.com:kristina-hladikova/Zahradka.git
 
 ### Requirements
-Then install all requirements from [https://github.com/kristina-hladikova/Zahradka/blob/master/requirements.txt].
+Then install all requirements from [https://github.com/kristina-hladikova/garden/blob/master/requirements.txt].
 
 ### Adding plants
 Now you can add your own plants, the specific events like planting, rejuvenation, pruning, harvesting and other. 
