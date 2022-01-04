@@ -9,11 +9,14 @@ Vítejte na stránkách, kde si můžete nastavit zahrádku, přiřadit rostliny
 <p>
 <i>Tuto webovou aplikaci pro Vás připravili Kristína Hladíková a Vítek Kuntoš.</i>
 </p>
+  <img src="{% static "zahradka_app/zahradka_navod.png" %}" alt="navod" style="width:1000px;">
   <br>
 </p>
-  <p>Podívejte se jaké rostliny můžete mít ve Vaší zahrádce.</p>
+
 
 <div class="container">
+  <br>
+  <p>Podívejte se jaké rostliny můžete mít ve Vaší zahrádce:</p>
 
 <div class="column left">
   <div class="card" style="width:200px">
@@ -27,6 +30,13 @@ Vítejte na stránkách, kde si můžete nastavit zahrádku, přiřadit rostliny
     <div class="card-body">
       <h5 class="card-title">Zelenina</h5>
       <a href="{% url 'vegetable' %}" class="btn btn-warning">Seznam zeleniny</a>
+    </div>
+  </div>
+    <br>
+  <div class="card" style="width:200px">
+    <div class="card-body">
+      <h5 class="card-title">Jehličnany</h5>
+      <a href="{% url 'conifers' %}" class="btn btn-warning">Seznam jehličnanů</a>
     </div>
   </div>
 </div>
@@ -44,6 +54,13 @@ Vítejte na stránkách, kde si můžete nastavit zahrádku, přiřadit rostliny
       <a href="{% url 'fruit_tree' %}" class="btn btn-warning">Seznam ovocných stromů</a>
     </div>
   </div>
+  <br>
+    <div class="card" style="width:200px">
+      <div class="card-body">
+        <h5 class="card-title">Okrasné rostliny</h5>
+        <a href="{% url 'decorative_plants' %}" class="btn btn-warning">Seznam okrasných rostlin</a>
+      </div>
+    </div>
 </div>
 </div>
 
