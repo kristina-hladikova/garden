@@ -9,9 +9,9 @@ You can visit and after registration fully use our web application on [https://g
 You can clone the app on your computer. 
 
 ### Clone
-HTTPS: https://github.com/kristina-hladikova/Zahradka.git
+HTTPS: https://github.com/kristina-hladikova/garden.git
 
-SSH: git@github.com:kristina-hladikova/Zahradka.git
+SSH: git@github.com:kristina-hladikova/garden.git
 
 ### Requirements
 Then install all requirements from [https://github.com/kristina-hladikova/garden/blob/master/requirements.txt].
